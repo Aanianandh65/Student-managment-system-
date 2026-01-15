@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+    <!-- Page Title -->
+    <div class="mb-4">
+        <h3 class="fw-bold">Add New Student</h3>
+        <p class="text-muted">Enter student details carefully</p>
+    </div>
+
+    <!-- Success Message -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- STUDENT DETAILS -->
+        <div class="card mb-4">
+            <div class="card-header fw-semibold">
+                Student Details
+            </div>
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Student Name</label>
+                        {{ student_form.name|add_class:"form-control" }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        {{ student_form.phone|add_class:"form-control" }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Branch</label>
+                        {{ student_form.branch|add_class:"form-select" }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Department</label>
+                        {{ student_form.department|add_class:"form-select" }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Batch</label>
+                        {{ student_form.batch|add_class:"form-control" }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Batch Start Date</label>
+                        {{ student_form.batch_start|add_class:"form-control" }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Batch End Date</label>
+                        {{ student_form.batch_end|add_class:"form-control" }}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Remarks</label>
+                        {{ student_form.remarks|add_class:"form-control" }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- IT DETAILS -->
+        <div class="card mb-4">
+            <div class="card-header fw-semibold text-info">
+                IT Course Details (Only for IT Students)
+            </div>
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-8">
+                        <label class="form-label">Course</label>
+                        {{ it_form.course|add_class:"form-select" }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Completion %</label>
+                        {{ it_form.completion_percentage|add_class:"form-control" }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CADD DETAILS -->
+        <div class="card mb-4">
+            <div class="card-header fw-semibold text-warning">
+                CADD Software Details (Only for CADD Students)
+            </div>
+            <div class="card-body">
+
+                {% for software in softwares %}
+                <div class="row align-items-center mb-2">
+                    <div class="col-md-6 fw-semibold">
+                        {{ software.name }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <select name="status" class="form-select">
+                            <option value="">Select Status</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <input type="hidden" name="software" value="{{ software.id }}">
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="d-flex justify-content-end gap-2">
+            <button type="reset" class="btn btn-outline-secondary">
+                Reset
+            </button>
+            <button type="submit" class="btn btn-success">
+                Save Student
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

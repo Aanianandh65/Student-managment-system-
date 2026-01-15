@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">{{ branch }} Branch Students</h3>
+    </div>
+
+    <!-- Filters -->
+    <form method="get" class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="Search by student name"
+                value="{{ request.GET.name }}"
+            >
+        </div>
+
+        <div class="col-md-4">
+            <input
+                type="text"
+                name="batch"
+                class="form-control"
+                placeholder="Search by batch"
+                value="{{ request.GET.batch }}"
+            >
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">
+                Filter
+            </button>
+        </div>
+
+        <div class="col-md-2">
+            <a href="/branch/{{ branch }}/" class="btn btn-outline-secondary w-100">
+                Reset
+            </a>
+        </div>
+
+    </form>
+
+    <!-- Students Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Course / Software</th>
+                    <th>Status</th>
+                    <th>Batch</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for r in rows %}
+                <tr>
+                    <td class="fw-semibold">{{ r.name }}</td>
+                    <td>{{ r.phone }}</td>
+
+                    <!-- Department Badge -->
+                    <td>
+                        {% if r.department == "IT" %}
+                            <span class="badge bg-info text-dark">IT</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">CADD</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ r.course_or_software }}</td>
+
+                    <!-- Status Badge -->
+                    <td>
+                        {% if "Completed" in r.status %}
+                            <span class="badge bg-success">{{ r.status }}</span>
+                        {% elif r.status == "Ongoing" %}
+                            <span class="badge bg-primary">Ongoing</span>
+                        {% elif r.status == "Upcoming" %}
+                            <span class="badge bg-secondary">Upcoming</span>
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ r.batch }}</td>
+
+                    <td class="text-center">
+                        <a href="/students/edit/{{ r.id }}/" class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">
+                        No students found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

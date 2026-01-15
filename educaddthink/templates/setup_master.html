@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Setup</title>
+</head>
+<body>
+
+<h2>System Setup (One Time)</h2>
+
+<h3>Add Branch</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ branch_form.as_p }}
+    {% for error in branch_form.errors.values %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+    <button type="submit">Add Branch</button>
+</form>
+
+
+<hr>
+
+<h3>Add Department</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ dept_form.as_p }}
+    {% for error in dept_form.errors.values %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+    <button type="submit">Add Department</button>
+</form>
+
+<hr>
+
+<h3>Add IT Course</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ course_form.as_p }}
+    {% for error in course_form.errors.values %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+    <button type="submit">Add Course</button>
+</form>
+
+<hr>
+
+<h3>Add CADD Software</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ software_form.as_p }}
+    {% for error in software_form.errors.values %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+    <button type="submit">Add Software</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="hero-video">
+
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline>
+        <source src="{% static 'videos/tech-bg.mp4.mp4' %}" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Content -->
+    <div class="hero-content">
+        <h1>Educadd THINK works</h1>
+        <p>Student Management System</p>
+        <a href="/students/all/">View Students</a>
+    </div>
+
+</div>
+
+{% endblock %}

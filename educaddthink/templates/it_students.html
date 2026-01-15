@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">IT Students – Progress Tracker</h3>
+    </div>
+
+    <!-- Filters -->
+    <form method="get" class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="Student Name"
+                value="{{ request.GET.name }}"
+            >
+        </div>
+
+        <div class="col-md-3">
+            <input
+                type="text"
+                name="course"
+                class="form-control"
+                placeholder="Course"
+                value="{{ request.GET.course }}"
+            >
+        </div>
+
+        <div class="col-md-2">
+            <select name="branch" class="form-select">
+                <option value="">All Branches</option>
+                <option value="MTM" {% if request.GET.branch == "MTM" %}selected{% endif %}>MTM</option>
+                <option value="NTM" {% if request.GET.branch == "NTM" %}selected{% endif %}>NTM</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <input
+                type="number"
+                name="min_progress"
+                class="form-control"
+                placeholder="Min %"
+                value="{{ request.GET.min_progress }}"
+            >
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">
+                Filter
+            </button>
+        </div>
+
+    </form>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Branch</th>
+                    <th>Course</th>
+                    <th>Progress</th>
+                    <th>Batch</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for s in students %}
+                <tr>
+
+                    <td class="fw-semibold">{{ s.student.name }}</td>
+                    <td>{{ s.student.phone }}</td>
+
+                    <!-- Branch -->
+                    <td>
+                        <span class="badge bg-secondary">
+                            {{ s.student.branch.name }}
+                        </span>
+                    </td>
+
+                    <!-- Course -->
+                    <td>{{ s.course.name }}</td>
+
+                    <!-- Progress with color -->
+                    <td>
+                        {% if s.completion_percentage >= 75 %}
+                            <span class="badge bg-success">
+                                {{ s.completion_percentage }}%
+                            </span>
+                        {% elif s.completion_percentage >= 40 %}
+                            <span class="badge bg-warning text-dark">
+                                {{ s.completion_percentage }}%
+                            </span>
+                        {% else %}
+                            <span class="badge bg-danger">
+                                {{ s.completion_percentage }}%
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ s.student.batch }}</td>
+
+                    <td class="text-center">
+                        <a
+                            href="/students/edit/{{ s.student.id }}/"
+                            class="btn btn-sm btn-warning"
+                        >
+                            Edit
+                        </a>
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">
+                        No IT students found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
