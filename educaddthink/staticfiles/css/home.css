@@ -1,0 +1,74 @@
+/* Remove any default spacing */
+body {
+    margin: 0;
+    padding: 0;
+}
+/* Full screen hero */
+.hero-video {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 56px); /* subtract navbar height */
+    overflow: hidden;
+}
+
+/* Background video */
+.hero-video video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%) scale(0.9); /* 👈 zoom out */
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Dark overlay for readability */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2;
+}
+
+/* Centered content */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+/* White button */
+.hero-content a {
+    background: white;
+    color: black;
+    padding: 14px 36px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.hero-content a:hover {
+    background: #e5e7eb;
+    transform: translateY(-2px);
+}
